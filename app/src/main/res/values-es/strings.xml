@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="music">Musica</string>
+    <string name="inicialization_failure">No se pudo inicializar Player</string>
+    <!--<string name="api_key">AIzaSyDirNigz&#45;&#45;247ox9psR7SJad_WK3Hd1Z48</string>-->
+    <string name="send_song" >ENVIAR MÚSICA</string>
+    <string name="send_playlist">ENVIAR PLAYLIST</string>
+    <string name="search_hint">introduzca aquí su música</string>
+    <string name="playlists_title">Listas de reproducción</string>
+    <string name="settings">Ajustes</string>
+</resources>

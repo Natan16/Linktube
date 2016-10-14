@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="music">Musica</string>
+    <string name="inicialization_failure">Falha ao inicializar Player</string>
+    <!--<string name="api_key">AIzaSyDirNigz&#45;&#45;247ox9psR7SJad_WK3Hd1Z48</string>-->
+    <string name="send_song" >ENVIAR MÚSICA</string>
+    <string name="send_playlist">ENVIAR PLAYLIST</string>
+    <string name="search_hint">digite aqui sua música</string>
+    <string name="playlists_title">Listas de reprodução</string>
+    <string name="settings">Configurações</string>
+    <string name="musicOnly">Apenas Música</string>
+    <string name="musicOnlyDescription">Caso queira se procurar apenas por músicas</string>
+    <string name="amountVideosPreference">Quantidade de videos retornados na pesquisa do Youtube</string>
+    <string name="pref_syncConnectionType">Videos retornados por busca</string>
+
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--android:showAsAction="always"-->
+    <item
+        android:id="@+id/action_nova"
+        android:orderInCategory="100"
+        app:showAsAction = "ifRoom"
+        android:icon="@drawable/new_list_icon"
+        android:tint="#FFFFFF"
+        android:title="Playlists"/>
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/settings">
+    </item>
+
+</menu>
