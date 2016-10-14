@@ -259,8 +259,10 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PLAYLIST, "id = ?",
                 new String[] { String.valueOf(playlist.getId()) });
-       // db.close();
-
+        for (SongList songList : allSongLists())
+                if(songList.getId_playList() == playlist.getId())
+                    this.deleteSongList(songList);
+        
     }
 
     public Playlist getPlaylist(long id) {
