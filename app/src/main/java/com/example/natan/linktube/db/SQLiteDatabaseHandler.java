@@ -79,7 +79,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SONG, "id = ?",
                 new String[] { String.valueOf(song.getId()) });
-        db.close();
+       // db.close();
 
     }
 
@@ -137,7 +137,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         return songs;
     }
 
-    public void addSong(Song song) {
+    public long addSong(Song song) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_ID_SONGLIST, song.getIdSongList());
@@ -145,8 +145,9 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_URL, song.getUrl());
         values.put(KEY_SELECTED,song.getSelected());
         // insert
-        db.insert(TABLE_SONG , null, values);
-        db.close();
+        long id = db.insert(TABLE_SONG , null, values);
+       // db.close();
+        return id;
     }
 
     public int updateSong(Song song) {
@@ -162,7 +163,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 "id = ?", // selections
                 new String[] { String.valueOf(song.getId()) });
 
-        db.close();
+       // db.close();
 
         return i;
     }
@@ -176,7 +177,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
        /* for ( Song song : allSongs()){
             if (song.getIdSongList() == songList.getId()) deleteSong(song);
         }*/
-        db.close();
+        //db.close();
 
     }
 
@@ -228,13 +229,14 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         return songLists;
     }
 
-    public void addSongList(SongList songList) {
+    public long addSongList(SongList songList) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_ID_PLAYLIST, songList.getId_playList());
         // insert
-        db.insert(TABLE_SONGLIST , null, values);
-        db.close();
+        long id = db.insert(TABLE_SONGLIST , null, values);
+       // db.close();
+        return id;
     }
 
     public int updateSongList(SongList songList) {
@@ -247,7 +249,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 "id = ?", // selections
                 new String[] { String.valueOf(songList.getId()) });
 
-        db.close();
+        //db.close();
 
         return i;
     }
@@ -257,7 +259,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PLAYLIST, "id = ?",
                 new String[] { String.valueOf(playlist.getId()) });
-        db.close();
+       // db.close();
 
     }
 
@@ -302,19 +304,21 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 playlist = new Playlist();
                 playlist.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
                 playlist.setName(cursor.getString(cursor.getColumnIndex(KEY_PLAYLIST_NAME)));
+                playLists.add(playlist);
             } while (cursor.moveToNext());
         }
 
         return playLists;
     }
 
-    public void addPlayList(Playlist playlist) {
+    public long addPlayList(Playlist playlist) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_PLAYLIST_NAME, playlist.getName());
         // insert
-        db.insert(TABLE_PLAYLIST , null, values);
-        db.close();
+        long id = db.insert(TABLE_PLAYLIST , null, values);
+       // db.close();
+        return id ;
     }
 
     public int updatePlayList(Playlist playlist) {
@@ -327,8 +331,15 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 "id = ?", // selections
                 new String[] { String.valueOf(playlist.getId()) });
 
-        db.close();
+        //db.close();
 
         return i;
     }
+    // closing database
+    public void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null && db.isOpen())
+            db.close();
+    }
+
 }

@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(tp);
         setContentView(R.layout.activity_main);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setDb(new SQLiteDatabaseHandler(this));
+        setDb(new SQLiteDatabaseHandler(getApplicationContext()));
         //tem que dar um outro jeito de pegar o fragmento ativo no momento
         fragment = (PlaylistFragment) getFragmentManager().findFragmentById(R.id.fragment_place);
         //caso a atividade tenha sido chamada clicando numa playlist já existente
         if(getIntent().hasExtra("playlist_id")) {
 
             //fragment.getArguments().putInt("playlist_id", getIntent().getIntExtra("playlist_id",0));
-            //fragment.setArguments(getIntent().getExtras());ss
+            //fragment.setArguments(getIntent().getExtras());
             fragment.playlist_id =  getIntent().getIntExtra("playlist_id",0);
         }
         //caso contrário, cria uma nova playlist

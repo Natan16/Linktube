@@ -9,8 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.natan.linktube.db.Playlist;
 import com.example.natan.linktube.R;
+import com.example.natan.linktube.db.Playlist;
+import com.example.natan.linktube.db.SQLiteDatabaseHandler;
 import com.example.natan.linktube.playlist.MainActivity;
 import com.example.natan.linktube.utils.SwipeDismissListViewTouchListener;
 
@@ -28,12 +29,20 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
         final View view = inflater.inflate(R.layout.fragment_item, container, false);
         lvVideos = (ListView) view.findViewById(R.id.lv_videos2);
         //MainActivity.db = new SQLiteDatabaseHandler(view.getContext());
-        Playlist playteste = new Playlist(100,"Criolo");
-        MainActivity.getDb().addPlayList(playteste);
-        MainActivity.getDb().updatePlayList(playteste);
+        //Playlist playteste = new Playlist("Criolo");
+        //SQLiteOpenHelper db = MainActivity.getDb();
+        SQLiteDatabaseHandler db = MainActivity.getDb();
+        //playteste.setId((int) db.addPlayList(playteste));
+       // playteste.setId((int) db.addPlayList(playteste));
+       // playteste.setId((int) db.addPlayList(playteste));
+        //.d("O ID DE PLAYTESTE É",Integer.toString(playteste.getId()) );
+        //MainActivity.getDb().updatePlayList(playteste);
+        //Log.d("O TAMANHO DA PLAYLIST É", Integer.toString(db.allPlaylists().size()));
         for(Playlist mPlaylist : MainActivity.getDb().allPlaylists() ) {
-            videos.add(mPlaylist);
+                videos.add(mPlaylist);
         }
+        db.closeDB();
+        //videos.add(playteste);
         //videos.add("Emicida");
         //adaptador = new SavedPlaylistAdapter(getActivity(),videos);
         adaptador = new SavedPlaylistAdapter(getActivity() , videos);
