@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.db;
 
 /**
  * Created by natan on 10/4/2016.

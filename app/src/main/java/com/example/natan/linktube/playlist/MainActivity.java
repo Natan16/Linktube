@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.playlist;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+
+import com.example.natan.linktube.db.Playlist;
+import com.example.natan.linktube.R;
+import com.example.natan.linktube.db.SQLiteDatabaseHandler;
+import com.example.natan.linktube.savedPlaylists.SavedPlaylistsActivity;
+import com.example.natan.linktube.settings.SettingsActivity;
 
 /*compile 'com.google.api-client:google-api-client:1.21.0'
         compile 'org.codehaus.jackson:jackson-core-asl:1.9.0'

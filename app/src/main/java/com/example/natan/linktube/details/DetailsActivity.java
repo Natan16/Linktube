@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.details;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.natan.linktube.R;
+import com.example.natan.linktube.settings.SettingsActivity;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 
 public class DetailsActivity extends YouTubeBaseActivity {

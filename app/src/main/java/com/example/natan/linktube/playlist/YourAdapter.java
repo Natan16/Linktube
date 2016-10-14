@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.playlist;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.natan.linktube.R;
+import com.example.natan.linktube.db.Song;
+import com.example.natan.linktube.db.SQLiteDatabaseHandler;
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchResult;
 

@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.db;
 
 import android.content.ContentValues;
 import android.content.Context;

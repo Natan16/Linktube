@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         >
         <activity
-            android:name=".MainActivity"
+            android:name=".playlist.MainActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +24,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailsActivity"
+            android:name=".details.DetailsActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="Letra" />
-        <activity android:name=".SavedPlaylistsActivity"
+        <activity android:name=".savedPlaylists.SavedPlaylistsActivity"
             android:label="@string/playlists_title"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
-        <activity android:name=".SettingsActivity"
+        <activity android:name=".settings.SettingsActivity"
             android:label="@string/settings"></activity>
     </application>
 

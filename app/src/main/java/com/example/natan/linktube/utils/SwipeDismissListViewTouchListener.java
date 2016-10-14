@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

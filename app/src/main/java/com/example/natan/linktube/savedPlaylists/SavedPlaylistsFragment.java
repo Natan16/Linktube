@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.savedPlaylists;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.natan.linktube.db.Playlist;
+import com.example.natan.linktube.R;
+import com.example.natan.linktube.playlist.MainActivity;
+import com.example.natan.linktube.utils.SwipeDismissListViewTouchListener;
 
 import java.util.ArrayList;
 

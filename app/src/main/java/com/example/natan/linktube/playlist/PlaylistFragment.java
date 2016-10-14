@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.playlist;
 
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -20,6 +20,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.natan.linktube.R;
+import com.example.natan.linktube.db.SQLiteDatabaseHandler;
+import com.example.natan.linktube.db.Song;
+import com.example.natan.linktube.db.SongList;
+import com.example.natan.linktube.utils.SwipeDismissListViewTouchListener;
+import com.example.natan.linktube.details.DetailsActivity;
+import com.example.natan.linktube.details.DetailsFragment;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;

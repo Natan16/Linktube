@@ -1,4 +1,4 @@
-package com.example.natan.linktube;
+package com.example.natan.linktube.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.example.natan.linktube.R;
+import com.example.natan.linktube.savedPlaylists.SavedPlaylistsActivity;
 
 /**
  * Created by natan on 7/12/2016.

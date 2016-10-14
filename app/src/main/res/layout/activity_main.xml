@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <fragment
-        android:name="com.example.natan.linktube.PlaylistFragment"
+        android:name="com.example.natan.linktube.playlist.PlaylistFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fragment_place"
@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_playlist"
         />-->
-    <!--<fragment android:name="com.example.natan.linktube.PlaylistFragment"
+    <!--<fragment android:name="com.example.natan.linktube.playlist.PlaylistFragment"
         android:id="@+id/titles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>-->
