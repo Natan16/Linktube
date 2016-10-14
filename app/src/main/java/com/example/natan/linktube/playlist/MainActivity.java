@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(tp);
         setContentView(R.layout.activity_main);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        setDb(new SQLiteDatabaseHandler(this));
         //tem que dar um outro jeito de pegar o fragmento ativo no momento
         fragment = (PlaylistFragment) getFragmentManager().findFragmentById(R.id.fragment_place);
         //caso a atividade tenha sido chamada clicando numa playlist já existente
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //caso contrário, cria uma nova playlist
         else {
-            db = new SQLiteDatabaseHandler(this);
+            //db = new SQLiteDatabaseHandler(this);
             fragment.playlist_id = db.allPlaylists().size() + 1;
             db.addPlayList(new Playlist("apenas um teste"));
 

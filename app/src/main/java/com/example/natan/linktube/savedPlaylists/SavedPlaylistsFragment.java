@@ -60,25 +60,8 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
 
-                                    //View view_last = adaptador.getView(adaptador.getCount() - 1, listView, null);
-                                    //String last_ind = ((TextView) view_last.findViewById(R.id.cur_Pos)).getText().toString();
-                                    //Log.d("*********",last_ind);
-
-                                    //adaptador.notifyDataSetChanged();
-
                                     for (int i = position; i < adaptador.getCount() - 1; i++) {
                                         videos.set(i, videos.get(i + 1));
-
-                                        //remove do banco de dados a playlist que está sendo deletada
-                                        /*for (Playlist playlist : db.allPlaylists()) {
-                                            if (new String(playlist.getName()).equals(adaptador.getItem(position).toString())) {
-                                                db.deletePlaylist(playlist);
-                                            }
-                                        }*/
-
-                                        //não precisa se preocupar com deletes, quando voltar pra playlist,
-                                        //deleta logo tudo e reescreve. Pra isso playlist teria que ser
-                                        //um botão de menu do fragmento
                                         videos.remove(videos.size() - 1);
                                         adaptador.remove(adaptador.getItem(position));
 

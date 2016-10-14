@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.natan.linktube.R;
+import com.example.natan.linktube.db.SQLiteDatabaseHandler;
 import com.example.natan.linktube.db.Song;
 import com.example.natan.linktube.db.SongList;
 import com.example.natan.linktube.details.DetailsActivity;
@@ -82,6 +83,7 @@ public class PlaylistFragment extends android.app.Fragment {
             playlist_id = (int) getArguments().get("playlist_id");
         //adaptador = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, videos);
         Log.d("ID DA PLAYLIST", Integer.toString(playlist_id));
+        if ( MainActivity.getDb() == null) MainActivity.setDb(new SQLiteDatabaseHandler(getActivity()));
         for(SongList songList : MainActivity.getDb().allSongLists()){
             if( songList.getId_playList() == playlist_id) {
                 List<SearchResult> item = new ArrayList<SearchResult>();
