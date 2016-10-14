@@ -21,12 +21,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.natan.linktube.R;
-import com.example.natan.linktube.db.SQLiteDatabaseHandler;
 import com.example.natan.linktube.db.Song;
 import com.example.natan.linktube.db.SongList;
-import com.example.natan.linktube.utils.SwipeDismissListViewTouchListener;
 import com.example.natan.linktube.details.DetailsActivity;
 import com.example.natan.linktube.details.DetailsFragment;
+import com.example.natan.linktube.utils.SwipeDismissListViewTouchListener;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -72,7 +71,7 @@ public class PlaylistFragment extends android.app.Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_playlist, container, false);
         lvVideos = (ListView) view.findViewById(R.id.lv_videos);
-        MainActivity.db = new SQLiteDatabaseHandler(view.getContext());
+        //MainActivity.db = new SQLiteDatabaseHandler(view.getContext());
         prefs =  PreferenceManager.getDefaultSharedPreferences(view.getContext());
         NUMBER_OF_VIDEOS_RETURNED = Integer.parseInt(prefs.getString("numberOfVideos","25"));
         //Log.d("Numero de videos",Integer.toString(NUMBER_OF_VIDEOS_RETURNED));
@@ -83,10 +82,10 @@ public class PlaylistFragment extends android.app.Fragment {
             playlist_id = (int) getArguments().get("playlist_id");
         //adaptador = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, videos);
         Log.d("ID DA PLAYLIST", Integer.toString(playlist_id));
-        for(SongList songList : MainActivity.db.allSongLists()){
+        for(SongList songList : MainActivity.getDb().allSongLists()){
             if( songList.getId_playList() == playlist_id) {
                 List<SearchResult> item = new ArrayList<SearchResult>();
-                for(Song song : MainActivity.db.allSongs()){
+                for(Song song : MainActivity.getDb().allSongs()){
                     if(song.getIdSongList() == songList.getId()){
                         SearchResult resultado = new SearchResult();
                         resultado.getSnippet().setTitle(song.getName());
@@ -253,15 +252,15 @@ public class PlaylistFragment extends android.app.Fragment {
                     videos_pos.add(0);
                     //pega o maior dos id_selection e adiciona 1
                     //adiciona um item a tabela songlist, tem que dar um jeito de pegar a id da playlist
-                    int id_songList = MainActivity.db.allSongLists().size() + 1;
+                    int id_songList = MainActivity.getDb().allSongLists().size() + 1;
                     Log.d("ID DA PLAYLIST", Integer.toString(playlist_id));
-                    MainActivity.db.addSongList(new SongList(id_songList ,playlist_id));
+                    MainActivity.getDb().addSongList(new SongList(id_songList ,playlist_id));
 
                     for (int i = 0 ; i < result.size() ; i ++){
                         String songName = result.get(i).getSnippet().getTitle();
                         String songUrl = result.get(i).getId().getVideoId();
-                        if ( i == 0) MainActivity.db.addSong(new Song( id_songList ,songName , songUrl, 1));
-                        else MainActivity.db.addSong(new Song( id_songList ,songName , songUrl, 0));
+                        if ( i == 0) MainActivity.getDb().addSong(new Song( id_songList ,songName , songUrl, 1));
+                        else MainActivity.getDb().addSong(new Song( id_songList ,songName , songUrl, 0));
                     }
                     //recuperar o id dessa songList que eu acabei de adicionar
 

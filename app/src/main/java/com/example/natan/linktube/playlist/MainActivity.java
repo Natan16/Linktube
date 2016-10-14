@@ -25,8 +25,17 @@ import com.example.natan.linktube.settings.SettingsActivity;
 //YouTubeBaseActivity
 public class MainActivity extends AppCompatActivity {
     PlaylistFragment fragment;
+
+    public static SQLiteDatabaseHandler getDb() {
+        return db;
+    }
+
+    public static void setDb(SQLiteDatabaseHandler db) {
+        MainActivity.db = db;
+    }
+
     //String jaExiste = null;  // pra saber se a playList atual é nova ou já existia
-    public static SQLiteDatabaseHandler db ;
+    private static SQLiteDatabaseHandler db ;
     /*Button b;
     private YouTubePlayerView youTubePlayerView;
     private YouTubePlayer.OnInitializedListener onInitializedListener;*/

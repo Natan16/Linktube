@@ -29,9 +29,9 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
         lvVideos = (ListView) view.findViewById(R.id.lv_videos2);
         //MainActivity.db = new SQLiteDatabaseHandler(view.getContext());
         Playlist playteste = new Playlist(100,"Criolo");
-        MainActivity.db.addPlayList(playteste);
-        MainActivity.db.updatePlayList(playteste);
-        for(Playlist mPlaylist : MainActivity.db.allPlaylists() ) {
+        MainActivity.getDb().addPlayList(playteste);
+        MainActivity.getDb().updatePlayList(playteste);
+        for(Playlist mPlaylist : MainActivity.getDb().allPlaylists() ) {
             videos.add(mPlaylist);
         }
         //videos.add("Emicida");
