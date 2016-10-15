@@ -5,8 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.example.natan.linktube.R;
 import com.example.natan.linktube.db.SQLiteDatabaseHandler;
+import com.example.natan.linktube.db.Song;
 import com.example.natan.linktube.db.SongList;
 
 import java.util.ArrayList;
@@ -39,108 +43,90 @@ public int getCount() {
 
 @Override
 public SongList getItem(int position) {
-        // TODO Auto-generated method stub
         return data.get(position);
         }
 
 @Override
 public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
         }
 
 @Override
 public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-
+        // TODO método no gerenciador do banco de dados pra recuperar os Songs a partir do id da songList
+        int songListId = getItem(position).getId();
+        int inicPos = 0;
+        final List<Song> songs = new ArrayList<Song>();
+        for (Song song : db.allSongs()){
+                if(song.getIdSongList() == songListId ){
+                        songs.add(song);
+                        if ( song.getSelected() == 1){
+                                inicPos = songs.size() - 1;
+                        }
+                }
+        }
+        final int size = songs.size();
 
         View vi = convertView;
-        /*if (vi == null)
+        if (vi == null)
         vi = inflater.inflate(R.layout.row, null);
-        int inic_pos = PlaylistFragment.videos_pos.get(position);
-        TextView pos = (TextView) vi.findViewById(R.id.cur_Pos);
-        pos.setText(new Integer(inic_pos).toString());
+        //int inic_pos = PlaylistFragment.videos_pos.get(position);
+        //TextView pos = (TextView) vi.findViewById(R.id.cur_Pos);
+        //pos.setText(new Integer(inic_pos).toString());
 //int inic_pos =  Integer.parseInt(pos.getText().toString());
 
         final View finalVi = vi;
-        ResourceId rId = getItem(position).get(inic_pos).getId();
+        //ResourceId rId = getItem(position).get(inic_pos).getId();
         TextView url = (TextView) vi.findViewById(R.id.video_url);
-        url.setText(getContext().getString(R.string.youtube_url_base) + rId.getVideoId());
+        url.setText(getContext().getString(R.string.youtube_url_base) + songs.get(inicPos).getUrl());
         TextView name = (TextView) vi.findViewById(R.id.video_name);
-        name.setText(getItem(position).get(inic_pos).getSnippet().getTitle());
+        name.setText(songs.get(inicPos).getName());
         ImageButton rotateLeft = (ImageButton) vi.findViewById(R.id.arrow_left_button);
         ImageButton rotateRight = (ImageButton) vi.findViewById(R.id.arrow_right_button);
-        if(inic_pos == 0){
-        rotateLeft.setVisibility(View.INVISIBLE);
-        rotateLeft.setClickable(false);}
-        else {
-        rotateLeft.setVisibility(View.VISIBLE);
-        rotateLeft.setClickable(true);}
-
-        if (inic_pos < PlaylistFragment.NUMBER_OF_VIDEOS_RETURNED - 1){
-        rotateRight.setVisibility(View.VISIBLE);
-        rotateRight.setClickable(true);
-        }
-        else {rotateRight.setVisibility(View.INVISIBLE);
-        rotateRight.setClickable(false);}
 
         rotateLeft.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
-        TextView pos = (TextView) finalVi.findViewById(R.id.cur_Pos);
-        int antigaPos = Integer.parseInt(pos.getText().toString());
-        int novaPos = antigaPos - 1;
-        pos.setText(new Integer(novaPos).toString());
-        if(novaPos == 0){
-        ImageButton rotateLeft = (ImageButton) finalVi.findViewById(R.id.arrow_left_button);
-        rotateLeft.setVisibility(View.INVISIBLE);
-        rotateLeft.setClickable(false);
-        }
-        if(novaPos < 0) novaPos = 0;
-        TextView url = (TextView) finalVi.findViewById(R.id.video_url);
-        url.setText(getContext().getString(R.string.youtube_url_base) + getItem(position).get(novaPos).getId().getVideoId());
-        TextView name = (TextView) finalVi.findViewById(R.id.video_name);
-        name.setText(getItem(position).get(novaPos).getSnippet().getTitle());
 
-        if(novaPos == PlaylistFragment.NUMBER_OF_VIDEOS_RETURNED - 2) {
-        finalVi.findViewById(R.id.arrow_right_button).setVisibility(View.VISIBLE);
-        finalVi.findViewById(R.id.arrow_right_button).setClickable(true);
-        }
-        PlaylistFragment.videos_pos.set(position , PlaylistFragment.videos_pos.get(position) - 1);
-        for ( Song mSong : db.allSongs()){
-        //position é a posição do cara da lista, tem que achar ele pelo id ( a posição na lista deveria ser
-        //um parâmetro do db
-        //if (mSong)
-        //tem que dar um jeito de passa o Id mesmo
-        }
+                TextView url = (TextView) finalVi.findViewById(R.id.video_url);
+                int curPos = 0;
+                for ( int i = 0 ; i < size ; i++){
+                        if ( songs.get(i).getSelected() == 1) curPos = i;
 
+                }
+                url.setText(getContext().getString(R.string.youtube_url_base) + songs.get((size + curPos - 1)%size).getUrl());
+                TextView name = (TextView) finalVi.findViewById(R.id.video_name);
+                name.setText(songs.get((size + curPos - 1)%size).getName());
+                Song oldSong = songs.get(curPos);
+                oldSong.setSelected(0);
+                db.updateSong(oldSong);
+                Song newSong = songs.get((size + curPos - 1)%size);
+                newSong.setSelected(1);
+                db.updateSong(newSong);
         }
         });
 
 
         rotateRight.setOnClickListener(new View.OnClickListener() {
 public void onClick(View v) {
-        TextView pos = (TextView) finalVi.findViewById(R.id.cur_Pos);
-        int novaPos =  Integer.parseInt(pos.getText().toString()) + 1;
-        pos.setText(new Integer(novaPos).toString());
-        if(novaPos == 1){
-        ImageButton rotateLeft = (ImageButton) finalVi.findViewById(R.id.arrow_left_button);
-        rotateLeft.setVisibility(View.VISIBLE);
-        rotateLeft.setClickable(true);}
-        if(novaPos == PlaylistFragment.NUMBER_OF_VIDEOS_RETURNED - 1){
-        ImageButton rotateRight = (ImageButton) finalVi.findViewById(R.id.arrow_right_button);
-        rotateRight.setVisibility(View.INVISIBLE);
-        rotateRight.setClickable(false);
-        }
-        if(novaPos > PlaylistFragment.NUMBER_OF_VIDEOS_RETURNED - 1) novaPos = PlaylistFragment.NUMBER_OF_VIDEOS_RETURNED - 1;
         TextView url = (TextView) finalVi.findViewById(R.id.video_url);
-        url.setText(getContext().getString(R.string.youtube_url_base) + getItem(position).get(novaPos).getId().getVideoId());
+        int curPos = 0;
+        for ( int i = 0 ; i < size ; i++){
+                if ( songs.get(i).getSelected() == 1) curPos = i;
+
+        }
+        url.setText(getContext().getString(R.string.youtube_url_base) + songs.get((size + curPos + 1)%size).getUrl());
         TextView name = (TextView) finalVi.findViewById(R.id.video_name);
-        name.setText(getItem(position).get(novaPos).getSnippet().getTitle());
-        PlaylistFragment.videos_pos.set(position , PlaylistFragment.videos_pos.get(position) + 1);
+        name.setText(songs.get((size + curPos + 1)%size).getName());
+        Song oldSong = songs.get(curPos);
+        oldSong.setSelected(0);
+        db.updateSong(oldSong);
+        Song newSong = songs.get((size + curPos + 1)%size);
+        newSong.setSelected(1);
+        db.updateSong(newSong);
 
         }
         });
-*/
+
         return vi;
         }
         }

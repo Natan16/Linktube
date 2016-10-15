@@ -260,8 +260,8 @@ public class PlaylistFragment extends android.app.Fragment {
                     //adiciona um item a tabela songlist, tem que dar um jeito de pegar a id da playlist
                     int id_songList = MainActivity.getDb().allSongLists().size() + 1;
                     Log.d("ID DA PLAYLIST", Integer.toString(playlist_id));
+                    //TODO método no gerenciador do banco de dados pra recuperar os Songs e as SongLists a partir do id da Playlist
                     MainActivity.getDb().addSongList(new SongList(id_songList ,playlist_id));
-
                     for (int i = 0 ; i < result.size() ; i ++){
                         String songName = result.get(i).getSnippet().getTitle();
                         String songUrl = result.get(i).getId().getVideoId();

@@ -69,16 +69,18 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
 
-                                    for (int i = position; i < adaptador.getCount() - 1; i++) {
+                                   /* for (int i = position; i < adaptador.getCount() - 1; i++) {
                                         videos.set(i, videos.get(i + 1));
                                         videos.remove(videos.size() - 1);
                                         adaptador.remove(adaptador.getItem(position));
-
                                     }
+*/                                  Playlist dPlaylist = adaptador.getItem(position);
+                                    MainActivity.getDb().deletePlaylist(dPlaylist);
+                                    adaptador.remove(dPlaylist);
                                     adaptador.notifyDataSetChanged();
-                                    for (int i = 0; i < adaptador.getCount(); i++) {
+                                    /*for (int i = 0; i < adaptador.getCount(); i++) {
                                         View view = adaptador.getView(i, listView, null);
-                                    }
+                                    }*/
                                 }
                             }
                         });
