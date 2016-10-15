@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
             //fragment.getArguments().putInt("playlist_id", getIntent().getIntExtra("playlist_id",0));
             //fragment.setArguments(getIntent().getExtras());
-            fragment.playlist_id =  getIntent().getIntExtra("playlist_id",0);
+            fragment.playlist_id =  getIntent().getIntExtra("playlist_id",100);
         }
         //caso contrário, cria uma nova playlist
         else {
             //db = new SQLiteDatabaseHandler(this);
-            fragment.playlist_id = db.allPlaylists().size() + 1;
-            db.addPlayList(new Playlist("apenas um teste"));
+            //= db.allPlaylists().size() + 1;
+            fragment.playlist_id = (int) db.addPlayList(new Playlist("apenas um teste"));
 
         }
         /*EditText txtUserid = (EditText) findViewById(R.id.video_query);

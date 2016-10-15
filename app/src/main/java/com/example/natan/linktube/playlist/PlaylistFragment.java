@@ -87,19 +87,6 @@ public class PlaylistFragment extends android.app.Fragment {
         for(SongList songList : MainActivity.getDb().allSongLists()){
             if( songList.getId_playList() == playlist_id) {
                 videos.add(songList);
-                /*List<SearchResult> item = new ArrayList<SearchResult>();
-                for(Song song : MainActivity.getDb().allSongs()){
-                    if(song.getIdSongList() == songList.getId()){
-                        SearchResult resultado = new SearchResult();
-                        resultado.setSnippet(new SearchResultSnippet());
-                        resultado.getSnippet().setTitle(song.getName());
-                        resultado.setId(new ResourceId());
-                        resultado.getId().setVideoId(song.getUrl());
-                        item.add(resultado);
-                    }
-
-                }*/
-
             }
         }
 
@@ -125,66 +112,6 @@ public class PlaylistFragment extends android.app.Fragment {
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
-
-                                    View view_last = adaptador.getView(adaptador.getCount() - 1, listView, null);
-                                    String last_ind = ((TextView) view_last.findViewById(R.id.cur_Pos)).getText().toString();
-                                    //Log.d("*********",last_ind);
-
-                                    //adaptador.notifyDataSetChanged();
-                                    //TODO : aqui tem que mudar campos cur_Pos de cada um dos itens afetados
-                                    for (int i = position ; i < adaptador.getCount() - 1  ; i++){
-                                        videos_pos.set(i  , videos_pos.get(i + 1));
-                                        //View view = adaptador.getView(i, listView, null);
-                                        //View viewProx = adaptador.getView(i+1, listView ,null);
-                                      /*  ((TextView) view.findViewById(R.id.cur_Pos)).setText(
-                                                ((TextView) viewProx.findViewById(R.id.cur_Pos)).getText().toString());
-*//*                                        ((TextView) view.findViewById(R.id.video_name)).setText(
-                                                ((TextView) viewProx.findViewById(R.id.video_name)).getText().toString());
-                                        ((TextView) view.findViewById(R.id.video_url)).setText(
-                                                ((TextView) viewProx.findViewById(R.id.video_url)).getText().toString());
-                                        /*//*//*adaptador.getView(i, listView, null);*/
-                                        //Log.d("Posição "+ i,((TextView) view.findViewById(R.id.video_name)).getText().toString());
-                                        //Log.d("Posição "+ i,((TextView) view.findViewById(R.id.cur_Pos)).getText().toString());
-
-                                    }
-
-                                    if (adaptador.getCount() >= 1) {
-                                        ((TextView) adaptador.getView(adaptador.getCount() - 1, null, null).findViewById(R.id.cur_Pos)).setText(
-                                                last_ind
-                                        );
-
-                                    }
-                                    //videos_pos.set(i+1 , videos_pos.get(i + 1));
-
-                                    //adaptador.getView(adaptador.getCount() - 1, listView, null);
-                                    //TODO :caso uma songlist seja deletada, ela é eliminada do banco de dados
-                                    /*Song song = new Song();
-                                    //if adaptador.getCount() != 0)
-                                    String song_name = ((TextView) adaptador.getView(position, listView , null).findViewById(R.id.video_name))
-                                            .getText().toString();
-                                    int id_selection = -1;
-                                    for ( Song mSong : db.allSongs()) {
-                                        //pode ter músicas repetidas, pega só o primeiro
-                                        if (mSong.getName() == song_name)
-                                            id_selection = mSong.getIdSelection();
-                                    }
-                                    for ( Song mSong : db.allSongs()){
-                                        if (mSong.getIdSelection() == id_selection)
-                                            db.deleteOne(mSong);
-                                    }
-                                    db.deleteOne(song);*/
-                                    //não precisa se preocupar com deletes, quando voltar pra playlist,
-                                    //deleta logo tudo e reescreve. Pra isso playlist teria que ser
-                                    //um botão de menu do fragmento
-                                    //tem que dar um jeito de recuperar o id da songList deletada
-                                    /*for (SongList songList : db.allSongLists()) {
-                                        if (new String(songList.getName()).equals(adaptador.getItem(position))) {
-                                            db.deletePlaylist(songList);
-                                        }
-                                    }*/
-
-
-                                    videos_pos.remove(videos_pos.size()-1);
                                     adaptador.remove(adaptador.getItem(position));
                                 }
                                 adaptador.notifyDataSetChanged();
@@ -214,7 +141,7 @@ public class PlaylistFragment extends android.app.Fragment {
                     waIntent.setType("text/plain");
                     String wpp_text = "";
                     for ( int i = 0; i < adaptador.getCount(); i++){
-                       TextView name = (TextView) adaptador.getView(i, null , null).findViewById(R.id.video_name);
+                        TextView name = (TextView) adaptador.getView(i, null , null).findViewById(R.id.video_name);
                         wpp_text += name.getText().toString() + "\n";
                         TextView url = (TextView) adaptador.getView(i, null , null).findViewById(R.id.video_url);
                         wpp_text += url.getText().toString() + "\n";
@@ -268,7 +195,7 @@ public class PlaylistFragment extends android.app.Fragment {
                         if ( i == 0) MainActivity.getDb().addSong(new Song( id_songList ,songName , songUrl, 1));
                         else MainActivity.getDb().addSong(new Song( id_songList ,songName , songUrl, 0));
                     }
-                   
+
                     adaptador.add(mSongList);
                     adaptador.notifyDataSetChanged();
                 }

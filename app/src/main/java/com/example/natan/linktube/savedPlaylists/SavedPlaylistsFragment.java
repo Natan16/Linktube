@@ -32,12 +32,7 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
         //Playlist playteste = new Playlist("Criolo");
         //SQLiteOpenHelper db = MainActivity.getDb();
         SQLiteDatabaseHandler db = MainActivity.getDb();
-        //playteste.setId((int) db.addPlayList(playteste));
-       // playteste.setId((int) db.addPlayList(playteste));
-       // playteste.setId((int) db.addPlayList(playteste));
-        //.d("O ID DE PLAYTESTE É",Integer.toString(playteste.getId()) );
-        //MainActivity.getDb().updatePlayList(playteste);
-        //Log.d("O TAMANHO DA PLAYLIST É", Integer.toString(db.allPlaylists().size()));
+
         for(Playlist mPlaylist : MainActivity.getDb().allPlaylists() ) {
                 videos.add(mPlaylist);
         }
@@ -68,22 +63,18 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
-
-                                   /* for (int i = position; i < adaptador.getCount() - 1; i++) {
-                                        videos.set(i, videos.get(i + 1));
-                                        videos.remove(videos.size() - 1);
-                                        adaptador.remove(adaptador.getItem(position));
-                                    }
-*/                                  Playlist dPlaylist = adaptador.getItem(position);
+                                    Playlist dPlaylist = adaptador.getItem(position);
                                     MainActivity.getDb().deletePlaylist(dPlaylist);
                                     adaptador.remove(dPlaylist);
                                     adaptador.notifyDataSetChanged();
-                                    /*for (int i = 0; i < adaptador.getCount(); i++) {
-                                        View view = adaptador.getView(i, listView, null);
-                                    }*/
+
                                 }
                             }
                         });
+        lvVideos.setOnTouchListener(touchListener);
+        // Setting this scroll listener is required to ensure that during ListView scrolling,
+        // we don't look for swipes.
+        lvVideos.setOnScrollListener(touchListener.makeScrollListener());
 
             return view;
     }

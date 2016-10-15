@@ -78,8 +78,10 @@ public View getView(final int position, View convertView, ViewGroup parent) {
         final View finalVi = vi;
         //ResourceId rId = getItem(position).get(inic_pos).getId();
         TextView url = (TextView) vi.findViewById(R.id.video_url);
+        if( size != 0)
         url.setText(getContext().getString(R.string.youtube_url_base) + songs.get(inicPos).getUrl());
         TextView name = (TextView) vi.findViewById(R.id.video_name);
+        if ( size != 0)
         name.setText(songs.get(inicPos).getName());
         ImageButton rotateLeft = (ImageButton) vi.findViewById(R.id.arrow_left_button);
         ImageButton rotateRight = (ImageButton) vi.findViewById(R.id.arrow_right_button);
