@@ -55,11 +55,14 @@ public long getItemId(int position) {
 public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO método no gerenciador do banco de dados pra recuperar os Songs a partir do id da songList
         int songListId = getItem(position).getId();
+        //Log.d("***********",Integer.toString(songListId));
         int inicPos = 0;
         final List<Song> songs = new ArrayList<Song>();
         for (Song song : db.allSongs()){
-                if(song.getIdSongList() == songListId ){
+                //Log.d("++++++++++",Integer.toString(song.getIdSongList()));
+                if(song.getIdSongList() == songListId){ //songListId
                         songs.add(song);
+
                         if ( song.getSelected() == 1){
                                 inicPos = songs.size() - 1;
                         }
@@ -73,15 +76,15 @@ public View getView(final int position, View convertView, ViewGroup parent) {
         //int inic_pos = PlaylistFragment.videos_pos.get(position);
         //TextView pos = (TextView) vi.findViewById(R.id.cur_Pos);
         //pos.setText(new Integer(inic_pos).toString());
-//int inic_pos =  Integer.parseInt(pos.getText().toString());
+        //int inic_pos =  Integer.parseInt(pos.getText().toString());
 
         final View finalVi = vi;
         //ResourceId rId = getItem(position).get(inic_pos).getId();
         TextView url = (TextView) vi.findViewById(R.id.video_url);
-        if( size != 0)
+        if(size != 0)
         url.setText(getContext().getString(R.string.youtube_url_base) + songs.get(inicPos).getUrl());
         TextView name = (TextView) vi.findViewById(R.id.video_name);
-        if ( size != 0)
+        if(size != 0)
         name.setText(songs.get(inicPos).getName());
         ImageButton rotateLeft = (ImageButton) vi.findViewById(R.id.arrow_left_button);
         ImageButton rotateRight = (ImageButton) vi.findViewById(R.id.arrow_right_button);

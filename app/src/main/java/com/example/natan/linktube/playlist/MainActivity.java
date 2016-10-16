@@ -91,16 +91,17 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent().hasExtra("playlist_id")) {
             //fragment.getArguments().putInt("playlist_id", getIntent().getIntExtra("playlist_id",0));
             //fragment.setArguments(getIntent().getExtras());
-            playlist_id =  getIntent().getIntExtra("playlist_id",100);
-            Log.d("----------------" , Integer.toString(playlist_id) );
+            setPlaylist_id(getIntent().getIntExtra("playlist_id",100));
+            Log.d("ooooooo" , Integer.toString(playlist_id) );
         }
         //caso contrário, cria uma nova playlist
         else {
             //db = new SQLiteDatabaseHandler(this);
             //= db.allPlaylists().size() + 1;
-            //Log.d("************" , "BIRL");
+
             //db.allSongLists().size();
-            playlist_id = (int) db.addPlayList(new Playlist("outro teste"));
+            setPlaylist_id((int) db.addPlayList(new Playlist("outro teste")));
+            Log.d("ooooooooooo" , "BIRL" + playlist_id);
             nova = true;
         }
         /*EditText txtUserid = (EditText) findViewById(R.id.video_query);

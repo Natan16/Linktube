@@ -94,6 +94,9 @@ public class PlaylistFragment extends android.app.Fragment {
         Log.d("ID PLAY FRAGMENTO",Integer.toString(playlist_id));
         for(SongList songList : MainActivity.getDb().allSongLists()){
             //Log.d("ID DA PLAYLIST",Integer.toString(songList.getId_playList()));
+            if ( songList.getId_playList() != 0)
+                Log.d("mmmmmmmmmmm",Integer.toString(songList.getId_playList()));
+            //Log.d("mmmmmmmmmmm",Integer.toString(songList.getId())); // as songLists estão sendo adicionadas a playlist 0, por algum motivo
             if( songList.getId_playList() == playlist_id) {
                 //MainActivity.getDb().deleteSongList(songList);
                 Log.d("VIDEO ADICIONADO",Integer.toString(songList.getId_playList()));
@@ -127,7 +130,9 @@ public class PlaylistFragment extends android.app.Fragment {
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
                                     SongList dSongList = adaptador.getItem(position);
-                                    MainActivity.getDb().deleteSongList(dSongList);
+                                    MainActivity.getDb().deleteSongList(dSongList); //não tá sendo deletado corretamnete pq não tá
+                                    //sendo adicionado corretamente
+                                    MainActivity.getDb().closeDB();
                                     adaptador.remove(adaptador.getItem(position));
                                 }
                                 adaptador.notifyDataSetChanged();
@@ -197,24 +202,31 @@ public class PlaylistFragment extends android.app.Fragment {
                        /* adaptador = new YourAdapter(getActivity(), videos ) ;
                         if (lvVideos != null)
                             lvVideos.setAdapter(adaptador);*/
-                    videos_pos.add(0);
+                    //videos_pos.add(0);
                     //pega o maior dos id_selection e adiciona 1
                     //adiciona um item a tabela songlist, tem que dar um jeito de pegar a id da playlist
                     //int id_songList = MainActivity.getDb().allSongLists().size() + 1;
                     //Log.d("ID DA PLAYLIST", Integer.toString(playlist_id));
                     //TODO método no gerenciador do banco de dados pra recuperar os Songs e as SongLists a partir do id da Playlist
                     Log.d("ID DA PLAYLIST", Integer.toString(MainActivity.getPlaylist_id()));
-                    SongList mSongList = new SongList(MainActivity.getPlaylist_id());
-                    int id_songList =(int) MainActivity.getDb().addSongList(mSongList);
-                    for (int i = 0 ; i < NUMBER_OF_VIDEOS_RETURNED ; i ++){
+                    //MainActivity.setPlaylist_id(30);
+                    int id_songList = (int) MainActivity.getDb().addSongList(new SongList(MainActivity.getPlaylist_id()));
+                    ;
+                    for (int i = 0; i < NUMBER_OF_VIDEOS_RETURNED; i++) {
                         String songName = result.get(i).getSnippet().getTitle();
                         String songUrl = result.get(i).getId().getVideoId();
-                        if ( i == 0) MainActivity.getDb().addSong(new Song( id_songList ,songName , songUrl, 1));
-                        else MainActivity.getDb().addSong(new Song( id_songList ,songName , songUrl, 0));
+                        if (i == 0)
+                            MainActivity.getDb().addSong(new Song(id_songList, songName, songUrl, 1));
+                        else
+                            MainActivity.getDb().addSong(new Song(id_songList, songName, songUrl, 0));
+                    }
+                    for (SongList sl : MainActivity.getDb().allSongLists()) {
+                        if (sl.getId() == id_songList) {
+                            adaptador.add(sl);
+                            adaptador.notifyDataSetChanged();
+                        }
                     }
 
-                    adaptador.add(mSongList);
-                    adaptador.notifyDataSetChanged();
                 }
                 //createListItem(result.iterator(), getActivity().getApplicationContext());
                 ((EditText) view.findViewById(R.id.video_query)).setText("");
@@ -254,16 +266,21 @@ public class PlaylistFragment extends android.app.Fragment {
                         //int id_songList = MainActivity.getDb().allSongLists().size() + 1;
                         Log.d("ID DA PLAYLIST", Integer.toString(MainActivity.getPlaylist_id()));
                         //TODO método no gerenciador do banco de dados pra recuperar os Songs e as SongLists a partir do id da Playlist
-                        SongList mSongList = new SongList(MainActivity.getPlaylist_id());
-                        int id_songList = (int)  MainActivity.getDb().addSongList(mSongList);
+                        //MainActivity.setPlaylist_id(30);
+                       // SongList mSongList = new SongList(MainActivity.getPlaylist_id());
+                        int id_songList = (int)  MainActivity.getDb().addSongList(new SongList(MainActivity.getPlaylist_id()));
                         for (int i = 0 ; i < NUMBER_OF_VIDEOS_RETURNED ; i ++){
                             String songName = result.get(i).getSnippet().getTitle();
                             String songUrl = result.get(i).getId().getVideoId();
                             if ( i == 0) MainActivity.getDb().addSong(new Song( id_songList ,songName , songUrl, 1));
                             else MainActivity.getDb().addSong(new Song( id_songList ,songName , songUrl, 0));
                         }
-                        adaptador.add(mSongList);
-                        adaptador.notifyDataSetChanged();
+                        for (SongList sl : MainActivity.getDb().allSongLists()) {
+                            if (sl.getId() == id_songList) {
+                                adaptador.add(sl);
+                                adaptador.notifyDataSetChanged();
+                            }
+                        }
                     }
                     //createListItem(result.iterator(), getActivity().getApplicationContext());
                     ((EditText) view.findViewById(R.id.video_query)).setText("");
