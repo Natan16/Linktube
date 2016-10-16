@@ -27,6 +27,7 @@
                 android:paddingBottom="16dp"
                 android:minHeight="64dp"
                 android:maxHeight="64dp"
+
                 />
 
         </LinearLayout>

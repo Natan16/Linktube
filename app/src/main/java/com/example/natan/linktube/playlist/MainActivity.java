@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.example.natan.linktube.db.Playlist;
 import com.example.natan.linktube.R;
+import com.example.natan.linktube.db.Playlist;
 import com.example.natan.linktube.db.SQLiteDatabaseHandler;
 import com.example.natan.linktube.savedPlaylists.SavedPlaylistsActivity;
 import com.example.natan.linktube.settings.SettingsActivity;
@@ -24,12 +25,21 @@ import com.example.natan.linktube.settings.SettingsActivity;
         compile 'com.google.android.gms:play-services-auth:8.3.0'*/
 //YouTubeBaseActivity
 public class MainActivity extends AppCompatActivity {
-    PlaylistFragment fragment;
+    //PlaylistFragment fragment;
 
+    public static int getPlaylist_id() {
+        return playlist_id;
+    }
+
+    public static void setPlaylist_id(int playlist_id) {
+        MainActivity.playlist_id = playlist_id;
+    }
+
+    private static int playlist_id;
     public static SQLiteDatabaseHandler getDb() {
         return db;
     }
-
+    public boolean nova = false; //pra determinar se ela playlist é nova ou já existia
     public static void setDb(SQLiteDatabaseHandler db) {
         MainActivity.db = db;
     }
@@ -68,21 +78,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setDb(new SQLiteDatabaseHandler(getApplicationContext()));
+       /* if ( savedInstanceState != null) {
+            fragment = new PlaylistFragment();
+            fragment.setArguments(getIntent().getExtras());
+        }*/
+        /*for (SongList sList : db.allSongLists())
+            db.deleteSongList(sList);*/
+        //getSupportFragmentManager().beginTransaction().add()
         //tem que dar um outro jeito de pegar o fragmento ativo no momento
-        fragment = (PlaylistFragment) getFragmentManager().findFragmentById(R.id.fragment_place);
+        //fragment = (PlaylistFragment) getFragmentManager().findFragmentById(R.id.fragment_place);
         //caso a atividade tenha sido chamada clicando numa playlist já existente
         if(getIntent().hasExtra("playlist_id")) {
-
             //fragment.getArguments().putInt("playlist_id", getIntent().getIntExtra("playlist_id",0));
             //fragment.setArguments(getIntent().getExtras());
-            fragment.playlist_id =  getIntent().getIntExtra("playlist_id",100);
+            playlist_id =  getIntent().getIntExtra("playlist_id",100);
+            Log.d("----------------" , Integer.toString(playlist_id) );
         }
         //caso contrário, cria uma nova playlist
         else {
             //db = new SQLiteDatabaseHandler(this);
             //= db.allPlaylists().size() + 1;
-            fragment.playlist_id = (int) db.addPlayList(new Playlist("apenas um teste"));
-
+            //Log.d("************" , "BIRL");
+            //db.allSongLists().size();
+            playlist_id = (int) db.addPlayList(new Playlist("outro teste"));
+            nova = true;
         }
         /*EditText txtUserid = (EditText) findViewById(R.id.video_query);
         txtUserid.clearFocus();*/
@@ -121,11 +140,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_playlists:
-
                 //fragment.
                 Intent play_intent = new Intent();
                 play_intent.setClass(this, SavedPlaylistsActivity.class);
-                play_intent.putExtra("playlist_id", fragment.playlist_id);
+                play_intent.putExtra("playlist_id", playlist_id);
+                play_intent.putExtra("nova", nova);
                 startActivity(play_intent);
                 return true;
             default:

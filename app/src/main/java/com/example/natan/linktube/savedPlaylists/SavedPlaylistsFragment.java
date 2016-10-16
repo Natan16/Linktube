@@ -50,7 +50,6 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
                 }
             });
         }
-
         SwipeDismissListViewTouchListener touchListener =
                 new SwipeDismissListViewTouchListener(
                         lvVideos,
@@ -65,9 +64,12 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
                                 for (int position : reverseSortedPositions) {
                                     Playlist dPlaylist = adaptador.getItem(position);
                                     MainActivity.getDb().deletePlaylist(dPlaylist);
+                                    MainActivity.getDb().closeDB();
                                     adaptador.remove(dPlaylist);
-                                    adaptador.notifyDataSetChanged();
-
+                                }
+                                adaptador.notifyDataSetChanged();
+                                for (int i = 0 ; i <  adaptador.getCount() ; i++){
+                                    View view = adaptador.getView(i, listView, null);
                                 }
                             }
                         });
@@ -86,12 +88,12 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
 
     void showDetails(int index) {
             int id = Integer.parseInt(((TextView) adaptador.getView(index , null , null).
-                    findViewById(R.id.playlist_id)).getText().toString());
+                    findViewById(R.id.playlist_id)).getText().toString()); // tá passando o id errado!!!!
             // Otherwise we need to launch a new activity to display
             // the dialog fragment with selected text.
             Intent intent = new Intent();
             intent.setClass(getActivity(), MainActivity.class);
-            //manda o id do item selecionado ( se é que houje algum )
+            //manda o id do item selecionado ( se é que houve algum )
             intent.putExtra("playlist_id", id);//aqui vai os itens da lista como extra
             startActivity(intent);
     }

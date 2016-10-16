@@ -23,6 +23,9 @@ public class SavedPlaylistsActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if( getIntent().hasExtra("playlist_id") ) {
+            if((boolean)  getIntent().getExtras().get("nova") == true){
+                //
+            }
             //caso tenha esse extra a playlist é nova e precisa ser nomeada
             //para isso pode abrir uma caixa de texto perguntando o nome da playlist
         }

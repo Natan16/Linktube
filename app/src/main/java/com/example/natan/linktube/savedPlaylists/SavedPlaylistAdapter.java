@@ -27,7 +27,6 @@ public class SavedPlaylistAdapter extends ArrayAdapter<Playlist> {
 
     public SavedPlaylistAdapter(Context context, ArrayList<Playlist> data) {
         super(context, 0, data);
-        // TODO Auto-generated constructor stub
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context
@@ -37,19 +36,16 @@ public class SavedPlaylistAdapter extends ArrayAdapter<Playlist> {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return data.size();
     }
 
     @Override
     public Playlist getItem(int position) {
-        // TODO Auto-generated method stub
         return data.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -58,6 +54,8 @@ public class SavedPlaylistAdapter extends ArrayAdapter<Playlist> {
         View vi = convertView;
         if (vi == null)
             vi = inflater.inflate(R.layout.row_saved_playlist, null);
+        /*if (position == 0)
+            vi.findViewById(R.id.playlist_name).setOnKeyListener(null);*/
         ((TextView) vi.findViewById(R.id.playlist_id)).setText(String.valueOf(getItem(position).getId()));
         ((TextView)  vi.findViewById(R.id.playlist_name)).setText(String.valueOf(getItem(position).getName()));
         //vi.findViewById(R.id.playlist_id) = String.valueOf(getItem(position).getId());
