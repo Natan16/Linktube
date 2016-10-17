@@ -13,6 +13,8 @@ import java.util.List;
  * Created by natan on 7/11/2016.
  */
 public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
+    private static SQLiteDatabaseHandler sInstance;
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "LinktubeDB";
     private static final String TABLE_SONG = "Song";
@@ -34,23 +36,41 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     private static final String[] COLUMNS_SONGLIST = { KEY_ID , KEY_ID_PLAYLIST };
     private static final String[] COLUMNS_PLAYLIST = { KEY_ID , KEY_PLAYLIST_NAME };
     // Table Create Statements
-    // Todo table create statement
-    private static final String CREATE_TABLE_SONG = "CREATE TABLE "
-            + TABLE_SONG + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_ID_SONGLIST
-            + " INTEGER ," + KEY_SONG_NAME + " TEXT ," + KEY_URL
+
+    /*private static final String CREATE_TABLE_SONG = "CREATE TABLE "
+            + TABLE_SONG + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ID_SONGLIST
+            + " INTEGER PRIMARY KEY AUTOINCREMENT ," + KEY_SONG_NAME + " TEXT ," + KEY_URL
             + " TEXT ," +  KEY_SELECTED + " INTEGER "  + ")";
 
     // Tag table create statement
     private static final String CREATE_TABLE_SONGLIST = "CREATE TABLE " + TABLE_SONGLIST
-            + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_ID_PLAYLIST + " INTEGER" +  ")";
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ID_PLAYLIST + " INTEGER PRIMARY KEY AUTOINCREMENT " +  ")";
+*/
+    private static final String CREATE_TABLE_SONG = "CREATE TABLE "
+            + TABLE_SONG + "(" + KEY_ID + " INTEGER ," + KEY_ID_SONGLIST
+            + " INTEGER ," + KEY_SONG_NAME + " TEXT ," + KEY_URL
+            + " TEXT ," +  KEY_SELECTED + " INTEGER , " + "PRIMARY KEY ( " + KEY_ID +", "+ KEY_ID_SONGLIST + ")" + ")";
+
+    // Tag table create statement
+    private static final String CREATE_TABLE_SONGLIST = "CREATE TABLE " + TABLE_SONGLIST
+            + "(" + KEY_ID + " INTEGER ," + KEY_ID_PLAYLIST + " INTEGER ," + "PRIMARY KEY ( " + KEY_ID +", "+ KEY_ID_PLAYLIST + ")" + ")";
 
     // todo_tag table create statement
     private static final String CREATE_TABLE_PLAYLIST = "CREATE TABLE "
-            + TABLE_PLAYLIST + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
+            + TABLE_PLAYLIST + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_PLAYLIST_NAME + " TEXT " + ")";
 
 
+    public static synchronized SQLiteDatabaseHandler getInstance(Context context) {
 
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new SQLiteDatabaseHandler(context.getApplicationContext());
+        }
+        return sInstance;
+    }
     public SQLiteDatabaseHandler(Context context) {
         super(context,DATABASE_NAME, null , DATABASE_VERSION);
     }
@@ -171,7 +191,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     public void deleteSongList(SongList songList) {
         // Get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SONGLIST, "id = ?",
+        db.delete(TABLE_SONGLIST, " id = ?",
                 new String[] { String.valueOf(songList.getId()) });
         //equivalente a DELETE FROM TABLE_SONG WHERE KEY_ID_SONGLIST = songList.getId();
         db.delete(TABLE_SONG, KEY_ID_SONGLIST + "=? ",new String[]{Integer.toString(songList.getId())});
@@ -226,7 +246,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 songLists.add(songList);
             } while (cursor.moveToNext());
         }
-
+        //db.close();
         return songLists;
     }
 
@@ -236,7 +256,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_ID_PLAYLIST, songList.getId_playList());
         // insert
         long id = db.insert(TABLE_SONGLIST , null, values);
-       // db.close();
+         //db.close();
         return id;
     }
 
@@ -258,12 +278,12 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     public void deletePlaylist(Playlist playlist) {
         // Get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PLAYLIST, "id = ?",
+        db.delete(TABLE_PLAYLIST, " id = ?",
                 new String[] { String.valueOf(playlist.getId()) });
         for (SongList songList : allSongLists())
                 if(songList.getId_playList() == playlist.getId())
                     this.deleteSongList(songList);
-
+       // db.close();
     }
 
     public Playlist getPlaylist(long id) {
@@ -290,7 +310,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         Playlist playlist = new Playlist();
         playlist.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
         playlist.setName(cursor.getString(cursor.getColumnIndex(KEY_PLAYLIST_NAME)));
-
+       // db.close();
         return playlist;
     }
 
@@ -310,7 +330,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 playLists.add(playlist);
             } while (cursor.moveToNext());
         }
-
+        //db.close();
         return playLists;
     }
 
@@ -320,7 +340,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PLAYLIST_NAME, playlist.getName());
         // insert
         long id = db.insert(TABLE_PLAYLIST , null, values);
-       // db.close();
+        //db.close();
         return id ;
     }
 
@@ -339,10 +359,10 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         return i;
     }
     // closing database
-    public void closeDB() {
+    /*public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null && db.isOpen())
             db.close();
-    }
+    }*/
 
 }

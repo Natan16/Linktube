@@ -1,6 +1,7 @@
 package com.example.natan.linktube.playlist;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,7 @@ public View getView(final int position, View convertView, ViewGroup parent) {
         int inicPos = 0;
         final List<Song> songs = new ArrayList<Song>();
         for (Song song : db.allSongs()){
-                //Log.d("++++++++++",Integer.toString(song.getIdSongList()));
+                Log.d("++++++++++",Integer.toString(song.getIdSongList()));
                 if(song.getIdSongList() == songListId){ //songListId
                         songs.add(song);
 

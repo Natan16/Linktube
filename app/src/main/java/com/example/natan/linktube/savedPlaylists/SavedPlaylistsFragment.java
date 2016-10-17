@@ -31,12 +31,12 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
         //MainActivity.db = new SQLiteDatabaseHandler(view.getContext());
         //Playlist playteste = new Playlist("Criolo");
         //SQLiteOpenHelper db = MainActivity.getDb();
-        SQLiteDatabaseHandler db = MainActivity.getDb();
+        SQLiteDatabaseHandler db = SQLiteDatabaseHandler.getInstance(getActivity());
 
-        for(Playlist mPlaylist : MainActivity.getDb().allPlaylists() ) {
+        for(Playlist mPlaylist : db.allPlaylists() ) {
                 videos.add(mPlaylist);
         }
-        db.closeDB();
+
         //videos.add(playteste);
         //videos.add("Emicida");
         //adaptador = new SavedPlaylistAdapter(getActivity(),videos);
@@ -61,10 +61,10 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
 
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                SQLiteDatabaseHandler db = SQLiteDatabaseHandler.getInstance(getActivity());
                                 for (int position : reverseSortedPositions) {
                                     Playlist dPlaylist = adaptador.getItem(position);
-                                    MainActivity.getDb().deletePlaylist(dPlaylist);
-                                    MainActivity.getDb().closeDB();
+                                    db.deletePlaylist(dPlaylist);
                                     adaptador.remove(dPlaylist);
                                 }
                                 adaptador.notifyDataSetChanged();
