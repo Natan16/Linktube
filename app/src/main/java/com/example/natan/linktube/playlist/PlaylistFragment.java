@@ -393,13 +393,13 @@ public class PlaylistFragment extends android.app.Fragment {
     void showDetails(int index) {
         //index = 1;
         mCurCheckPosition = index;
-        String url = "";
-        String name = "";
-        if ( index != 0) {
-            name = ((TextView) adaptador.getView(index, null, null).findViewById(R.id.video_name)).getText().toString();
-            url = ((TextView) adaptador.getView(index, null, null).findViewById(R.id.video_url)).getText().toString();
-        }
-        else mDualPane = false;
+        //String url = "";
+        //String name = "";
+        //if ( index != 0) {
+         String  name = ((TextView) adaptador.getView(index, null, null).findViewById(R.id.video_name)).getText().toString();
+         String  url = ((TextView) adaptador.getView(index, null, null).findViewById(R.id.video_url)).getText().toString();
+       // }
+        //else mDualPane = false;
             if (mDualPane) {
             // We can display everything in-place with fragments, so update
             // the list to highlight the selected item and show the data.
