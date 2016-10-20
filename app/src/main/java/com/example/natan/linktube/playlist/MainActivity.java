@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.example.natan.linktube.R;
-import com.example.natan.linktube.db.Playlist;
 import com.example.natan.linktube.db.SQLiteDatabaseHandler;
 import com.example.natan.linktube.savedPlaylists.SavedPlaylistsActivity;
 import com.example.natan.linktube.settings.SettingsActivity;
@@ -73,7 +72,15 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(tp);
         setContentView(R.layout.activity_main);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-       /* if ( savedInstanceState != null) {
+
+        if (savedInstanceState == null) {
+            // During initial setup, plug in the details fragment.
+            PlaylistFragment playlistFragment = new PlaylistFragment();
+            playlistFragment.setArguments(getIntent().getExtras());
+            getFragmentManager().beginTransaction().add(
+                    android.R.id.content, playlistFragment).commit();
+        }
+        /* if ( savedInstanceState != null) {
             fragment = new PlaylistFragment();
             fragment.setArguments(getIntent().getExtras());
         }*/
@@ -93,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
         else {
             //db = new SQLiteDatabaseHandler(this);
             //= db.allPlaylists().size() + 1;
-            db = SQLiteDatabaseHandler.getInstance(this);
+            /*db = SQLiteDatabaseHandler.getInstance(this);
             //db.allSongLists().size();
             setPlaylist_id((int) db.addPlayList(new Playlist("outro teste")));
-            Log.d("ooooooooooo" , "BIRL" + playlist_id);
+            Log.d("ooooooooooo" , "BIRL" + playlist_id);*/
             nova = true;
         }
         /*EditText txtUserid = (EditText) findViewById(R.id.video_query);

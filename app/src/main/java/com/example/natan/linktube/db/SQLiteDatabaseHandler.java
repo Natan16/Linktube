@@ -97,7 +97,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     public void deleteSong(Song song) {
         // Get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SONG, "id = ?",
+        db.delete(TABLE_SONG, " id = ?",
                 new String[] { String.valueOf(song.getId()) });
        // db.close();
 
@@ -180,7 +180,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
         int i = db.update(TABLE_SONG, // table
                 values, // column/value
-                "id = ?", // selections
+                " id = ?", // selections
                 new String[] { String.valueOf(song.getId()) });
 
        // db.close();
@@ -194,7 +194,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABLE_SONGLIST, " id = ?",
                 new String[] { String.valueOf(songList.getId()) });
         //equivalente a DELETE FROM TABLE_SONG WHERE KEY_ID_SONGLIST = songList.getId();
-        db.delete(TABLE_SONG, KEY_ID_SONGLIST + "=? ",new String[]{Integer.toString(songList.getId())});
+        db.delete(TABLE_SONG, KEY_ID_SONGLIST + " = ? ",new String[]{Integer.toString(songList.getId())});
        /* for ( Song song : allSongs()){
             if (song.getIdSongList() == songList.getId()) deleteSong(song);
         }*/
@@ -225,7 +225,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
         SongList songList = new SongList();
         songList.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-        songList.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID_PLAYLIST)));
+        songList.setId_playList(cursor.getInt(cursor.getColumnIndex(KEY_ID_PLAYLIST)));
 
         return songList;
     }
@@ -242,7 +242,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
             do {
                 songList = new SongList();
                 songList.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                songList.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID_PLAYLIST)));
+                songList.setId_playList(cursor.getInt(cursor.getColumnIndex(KEY_ID_PLAYLIST)));
                 songLists.add(songList);
             } while (cursor.moveToNext());
         }

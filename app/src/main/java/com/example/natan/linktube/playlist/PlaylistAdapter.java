@@ -60,10 +60,9 @@ public View getView(final int position, View convertView, ViewGroup parent) {
         int inicPos = 0;
         final List<Song> songs = new ArrayList<Song>();
         for (Song song : db.allSongs()){
-                Log.d("++++++++++",Integer.toString(song.getIdSongList()));
+                Log.d("ID DA SONGLIST",Integer.toString(song.getIdSongList()));
                 if(song.getIdSongList() == songListId){ //songListId
                         songs.add(song);
-
                         if ( song.getSelected() == 1){
                                 inicPos = songs.size() - 1;
                         }
@@ -99,15 +98,16 @@ public View getView(final int position, View convertView, ViewGroup parent) {
                         if ( songs.get(i).getSelected() == 1) curPos = i;
 
                 }
-                url.setText(getContext().getString(R.string.youtube_url_base) + songs.get((size + curPos - 1)%size).getUrl());
-                TextView name = (TextView) finalVi.findViewById(R.id.video_name);
-                name.setText(songs.get((size + curPos - 1)%size).getName());
-                Song oldSong = songs.get(curPos);
-                oldSong.setSelected(0);
-                db.updateSong(oldSong);
-                Song newSong = songs.get((size + curPos - 1)%size);
-                newSong.setSelected(1);
-                db.updateSong(newSong);
+                if ( size != 0)
+                        url.setText(getContext().getString(R.string.youtube_url_base) + songs.get((size + curPos - 1)%size).getUrl());
+                        TextView name = (TextView) finalVi.findViewById(R.id.video_name);
+                        name.setText(songs.get((size + curPos - 1)%size).getName());
+                        Song oldSong = songs.get(curPos);
+                        oldSong.setSelected(0);
+                        db.updateSong(oldSong);
+                        Song newSong = songs.get((size + curPos - 1)%size);
+                        newSong.setSelected(1);
+                        db.updateSong(newSong);
         }
         });
 
@@ -120,15 +120,18 @@ public void onClick(View v) {
                 if ( songs.get(i).getSelected() == 1) curPos = i;
 
         }
-        url.setText(getContext().getString(R.string.youtube_url_base) + songs.get((size + curPos + 1)%size).getUrl());
-        TextView name = (TextView) finalVi.findViewById(R.id.video_name);
-        name.setText(songs.get((size + curPos + 1)%size).getName());
-        Song oldSong = songs.get(curPos);
-        oldSong.setSelected(0);
-        db.updateSong(oldSong);
-        Song newSong = songs.get((size + curPos + 1)%size);
-        newSong.setSelected(1);
-        db.updateSong(newSong);
+        if( size != 0){
+                url.setText(getContext().getString(R.string.youtube_url_base) + songs.get((size + curPos + 1)%size).getUrl());
+                TextView name = (TextView) finalVi.findViewById(R.id.video_name);
+                name.setText(songs.get((size + curPos + 1)%size).getName());
+                Song oldSong = songs.get(curPos);
+                oldSong.setSelected(0);
+                db.updateSong(oldSong);
+
+                Song newSong = songs.get((size + curPos + 1)%size);
+                newSong.setSelected(1);
+                db.updateSong(newSong);
+        }
 
         }
         });
