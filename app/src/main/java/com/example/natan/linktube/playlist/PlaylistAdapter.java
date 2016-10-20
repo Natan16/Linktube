@@ -1,7 +1,6 @@
 package com.example.natan.linktube.playlist;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,11 +55,11 @@ public long getItemId(int position) {
 public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO método no gerenciador do banco de dados pra recuperar os Songs a partir do id da songList
         int songListId = getItem(position).getId();
-        //Log.d("***********",Integer.toString(songListId));
+       // Log.d("***********",Integer.toString(songListId)); //id da songList tá sendo 0, problemas no paraíso
         int inicPos = 0;
         final List<Song> songs = new ArrayList<Song>();
         for (Song song : db.allSongs()){
-                Log.d("ID DA SONGLIST",Integer.toString(song.getIdSongList()));
+                //Log.d("ID DA SONGLIST",Integer.toString(song.getIdSongList()));
                 if(song.getIdSongList() == songListId){ //songListId
                         songs.add(song);
                         if ( song.getSelected() == 1){

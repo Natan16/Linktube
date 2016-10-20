@@ -83,7 +83,7 @@ public class PlaylistFragment extends android.app.Fragment {
             db = SQLiteDatabaseHandler.getInstance(getActivity());
             //db.allSongLists().size();
             playlist_id = ((int) db.addPlayList(new Playlist("outro teste")));
-            Log.d("ooooooooooo" , "BIRL" + playlist_id);
+            //Log.d("ooooooooooo" , "BIRL" + playlist_id);
         }
 
         //Log.d("Numero de videos",Integer.toString(NUMBER_OF_VIDEOS_RETURNED));
@@ -105,21 +105,18 @@ public class PlaylistFragment extends android.app.Fragment {
         Log.d("ID PLAY FRAGMENTO",Integer.toString(playlist_id));
         for(SongList songList : db.allSongLists()){
             //Log.d("ID DA PLAYLIST",Integer.toString(songList.getId_playList()));
-            if ( songList.getId_playList() != 0)
-                Log.d("A VIDA É BELA",Integer.toString(songList.getId_playList()));
+            //if ( songList.getId() != 0)
+                //Log.d("mmmmmmm",Integer.toString(songList.getId()));
             //Log.d("mmmmmmmmmmm",Integer.toString(songList.getId())); // as songLists estão sendo adicionadas a playlist 0, por algum motivo
             if( songList.getId_playList() == playlist_id) {
                 //MainActivity.getDb().deleteSongList(songList);
-                Log.d("VIDEO ADICIONADO",Integer.toString(songList.getId_playList()));
+               // Log.d("VIDEO ADICIONADO",Integer.toString(songList.getId_playList()));
                 videos.add(songList);
             }
         }
 
         //Log.d("TAMANHO DE VIDEOS",Integer.toString(videos.size()));
         adaptador = new PlaylistAdapter(getActivity(),  videos);
-        for (int i = 0 ; i <  adaptador.getCount() ; i++){
-            //View v = adaptador.getView(i, null, null);
-        }
         adaptador.notifyDataSetChanged();
         if (lvVideos != null){
         lvVideos.setAdapter(adaptador);
@@ -146,7 +143,6 @@ public class PlaylistFragment extends android.app.Fragment {
                                     SongList dSongList = adaptador.getItem(position);
                                     db.deleteSongList(dSongList); //não tá sendo deletado corretamnete pq não tá
                                     //sendo adicionado corretamente
-
                                     adaptador.remove(adaptador.getItem(position));
                                 }
                                 adaptador.notifyDataSetChanged();

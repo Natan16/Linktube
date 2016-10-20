@@ -37,16 +37,16 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     private static final String[] COLUMNS_PLAYLIST = { KEY_ID , KEY_PLAYLIST_NAME };
     // Table Create Statements
 
-    /*private static final String CREATE_TABLE_SONG = "CREATE TABLE "
+    private static final String CREATE_TABLE_SONG = "CREATE TABLE "
             + TABLE_SONG + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ID_SONGLIST
-            + " INTEGER PRIMARY KEY AUTOINCREMENT ," + KEY_SONG_NAME + " TEXT ," + KEY_URL
+            + " INTEGER  ," + KEY_SONG_NAME + " TEXT ," + KEY_URL
             + " TEXT ," +  KEY_SELECTED + " INTEGER "  + ")";
 
     // Tag table create statement
     private static final String CREATE_TABLE_SONGLIST = "CREATE TABLE " + TABLE_SONGLIST
-            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ID_PLAYLIST + " INTEGER PRIMARY KEY AUTOINCREMENT " +  ")";
-*/
-    private static final String CREATE_TABLE_SONG = "CREATE TABLE "
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ID_PLAYLIST + " INTEGER " +  ")";
+
+   /* private static final String CREATE_TABLE_SONG = "CREATE TABLE "
             + TABLE_SONG + "(" + KEY_ID + " INTEGER ," + KEY_ID_SONGLIST
             + " INTEGER ," + KEY_SONG_NAME + " TEXT ," + KEY_URL
             + " TEXT ," +  KEY_SELECTED + " INTEGER , " + "PRIMARY KEY ( " + KEY_ID +", "+ KEY_ID_SONGLIST + ")" + ")";
@@ -54,7 +54,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     // Tag table create statement
     private static final String CREATE_TABLE_SONGLIST = "CREATE TABLE " + TABLE_SONGLIST
             + "(" + KEY_ID + " INTEGER ," + KEY_ID_PLAYLIST + " INTEGER ," + "PRIMARY KEY ( " + KEY_ID +", "+ KEY_ID_PLAYLIST + ")" + ")";
-
+*/
     // todo_tag table create statement
     private static final String CREATE_TABLE_PLAYLIST = "CREATE TABLE "
             + TABLE_PLAYLIST + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
