@@ -32,8 +32,38 @@ public class SavedPlaylistsFragment extends android.app.Fragment {
         //Playlist playteste = new Playlist("Criolo");
         //SQLiteOpenHelper db = MainActivity.getDb();
         SQLiteDatabaseHandler db = SQLiteDatabaseHandler.getInstance(getActivity());
+        int playlist_id = 0;
+        Bundle arguments = getArguments();
+        if( arguments != null  && arguments.containsKey("playlist_id") )
+            playlist_id = (int) arguments.get("playlist_id");
 
+        /*if( getIntent().hasExtra("playlist_id") ) {
+
+            if((boolean)  getIntent().getExtras().get("nova") == true){
+                //
+            }
+            //caso tenha esse extra a playlist é nova e precisa ser nomeada
+            //para isso pode abrir uma caixa de texto perguntando o nome da playlist
+        }*/
         for(Playlist mPlaylist : db.allPlaylists() ) {
+                /*String name = "";
+                if (mPlaylist.getId() == playlist_id){
+                    for (SongList songList : db.allSongLists()){
+                        if ( songList.getId_playList() == playlist_id){
+                            for (Song song : db.allSongs()){
+                                if(song.getSelected() == 1) {
+                                    String[] partes =  song.getName().split("-")[0].split(" ");
+                                    if(partes.length >= 2)
+                                        name += partes[0] + " "  + partes[1] + "/";
+                                    else if (partes.length == 1)
+                                        name += partes[0] + "/";
+                                }
+                            }
+                        }
+                    }
+                    if ( name.length() >= 25) name = name.substring(0,25) + " ...";
+                    mPlaylist.setName(name);
+                }*/
                 videos.add(mPlaylist);
         }
 

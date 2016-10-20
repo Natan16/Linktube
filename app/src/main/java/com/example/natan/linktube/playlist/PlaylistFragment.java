@@ -39,11 +39,12 @@ import com.google.api.services.youtube.model.SearchResult;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
 public class PlaylistFragment extends android.app.Fragment {
-
+    public static int id ;
     YouTube youtube;
     ListView lvVideos;
     //ArrayAdapter<String> adaptador;
@@ -63,7 +64,10 @@ public class PlaylistFragment extends android.app.Fragment {
     public void onResume() {
         super.onResume();
         prefs =  PreferenceManager.getDefaultSharedPreferences(getActivity());
-        NUMBER_OF_VIDEOS_RETURNED = Integer.parseInt(prefs.getString("numberOfVideos","25"));
+        for (Map.Entry<String, ?> pref : prefs.getAll().entrySet()){
+            Log.d("PREFERENCIA",pref.getKey());
+        }
+        NUMBER_OF_VIDEOS_RETURNED = Integer.parseInt(prefs.getString("pref_numberOfVideos","20"));
         //Log.d("Numero de videos",Integer.toString(NUMBER_OF_VIDEOS_RETURNED));
     }
 
@@ -75,14 +79,18 @@ public class PlaylistFragment extends android.app.Fragment {
         videos = new ArrayList<SongList>();
         db = SQLiteDatabaseHandler.getInstance(getActivity());
         prefs =  PreferenceManager.getDefaultSharedPreferences(view.getContext());
-        NUMBER_OF_VIDEOS_RETURNED = Integer.parseInt(prefs.getString("numberOfVideos","25"));
+        NUMBER_OF_VIDEOS_RETURNED = Integer.parseInt(prefs.getString("numberOfVideos","20"));
         Bundle arguments = getArguments();
         if( arguments != null  && arguments.containsKey("playlist_id") )
             playlist_id = (int) arguments.get("playlist_id");
         else {
             db = SQLiteDatabaseHandler.getInstance(getActivity());
             //db.allSongLists().size();
-            playlist_id = ((int) db.addPlayList(new Playlist("outro teste")));
+
+            int id = db.allPlaylists().size();
+            if ( id != 0)
+                playlist_id = ((int) db.addPlayList(new Playlist("nova playlist " + id)));
+            else  playlist_id = ((int) db.addPlayList(new Playlist("nova playlist ")));
             //Log.d("ooooooooooo" , "BIRL" + playlist_id);
         }
 
@@ -294,6 +302,7 @@ public class PlaylistFragment extends android.app.Fragment {
                         int id_songList = (int) db.addSongList(songList);
                         // id_songList = (int) db.addSongList(new SongList(playlist_id));
                         for (int i = 0 ; i < NUMBER_OF_VIDEOS_RETURNED ; i ++){
+                            //Log.d("TIPO", result.get(i).getEtag());
                             String songName = result.get(i).getSnippet().getTitle();
                             String songUrl = result.get(i).getId().getVideoId();
                             if ( i == 0) db.addSong(new Song( id_songList ,songName , songUrl, 1));
@@ -382,10 +391,16 @@ public class PlaylistFragment extends android.app.Fragment {
 
 
     void showDetails(int index) {
+        //index = 1;
         mCurCheckPosition = index;
-        String name = ((TextView) adaptador.getView(index , null , null).findViewById(R.id.video_name)).getText().toString();
-        String url = ((TextView) adaptador.getView(index , null , null).findViewById(R.id.video_url)).getText().toString();
-        if (mDualPane) {
+        String url = "";
+        String name = "";
+        if ( index != 0) {
+            name = ((TextView) adaptador.getView(index, null, null).findViewById(R.id.video_name)).getText().toString();
+            url = ((TextView) adaptador.getView(index, null, null).findViewById(R.id.video_url)).getText().toString();
+        }
+        else mDualPane = false;
+            if (mDualPane) {
             // We can display everything in-place with fragments, so update
             // the list to highlight the selected item and show the data.
             //getListView().setItemChecked(index, true);
@@ -565,7 +580,7 @@ public class PlaylistFragment extends android.app.Fragment {
 
             // To increase efficiency, only retrieve the fields that the
             // application uses.
-            search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
+            search.setFields("items(kind,id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
             search.setMaxResults((long) NUMBER_OF_VIDEOS_RETURNED);
 
             // Call the API and print results.

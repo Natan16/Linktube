@@ -1,15 +1,15 @@
 package com.example.natan.linktube.savedPlaylists;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.natan.linktube.R;
-import com.example.natan.linktube.settings.SettingsActivity;
 import com.example.natan.linktube.playlist.MainActivity;
+import com.example.natan.linktube.settings.SettingsActivity;
 
 public class SavedPlaylistsActivity extends AppCompatActivity {
 
@@ -22,13 +22,14 @@ public class SavedPlaylistsActivity extends AppCompatActivity {
         //ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if( getIntent().hasExtra("playlist_id") ) {
-            if((boolean)  getIntent().getExtras().get("nova") == true){
-                //
-            }
-            //caso tenha esse extra a playlist é nova e precisa ser nomeada
-            //para isso pode abrir uma caixa de texto perguntando o nome da playlist
+        if (savedInstanceState == null) {
+            // During initial setup, plug in the details fragment.
+            SavedPlaylistsFragment savedPlaylistsFragment = new SavedPlaylistsFragment();
+            savedPlaylistsFragment.setArguments(getIntent().getExtras());
+            getFragmentManager().beginTransaction().add(
+                    android.R.id.content, savedPlaylistsFragment).commit();
         }
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

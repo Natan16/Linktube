@@ -6,7 +6,7 @@
         android:summary="@string/musicOnlyDescription"
         android:defaultValue="true" />
     <ListPreference
-        android:key="pref_numerOfVideos"
+        android:key="pref_numberOfVideos"
         android:title="@string/pref_syncConnectionType"
         android:summary="@string/amountVideosPreference"
         android:dialogTitle="@string/pref_syncConnectionType"
